@@ -1,0 +1,19 @@
+<!-- res/animator/pulse_animation.xml -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:duration="1000"
+        android:propertyName="scaleX"
+        android:valueFrom="1"
+        android:valueTo="1.5"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:valueType="floatType" />
+    <objectAnimator
+        android:duration="1000"
+        android:propertyName="scaleY"
+        android:valueFrom="1"
+        android:valueTo="1.5"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:valueType="floatType" />
+</set>

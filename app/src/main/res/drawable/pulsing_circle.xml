@@ -1,0 +1,15 @@
+<!-- res/drawable/pulsing_circle.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <group>
+        <path
+            android:name="circle"
+            android:fillColor="#FF6200EE"
+            android:pathData="M50,10a40,40 0 1,1 -40,40a40,40 0 1,1 40,-40"/>
+    </group>
+</vector>

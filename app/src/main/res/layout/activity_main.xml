@@ -1,0 +1,100 @@
+<!-- res/layout/activity_main.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/background_dark"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Network Monitor App"
+        android:textSize="24sp"
+        android:textColor="@color/text_primary_light"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_bold" />
+
+    <TextView
+        android:id="@+id/infoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(5G + HotSpot(off)) -> Notification to turn it on\n(4G + HotSpot(on))  -> Notification to turn it off"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary_light"
+        android:layout_below="@id/descriptionTextView"
+        android:layout_marginBottom="24dp"
+        android:padding="8dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_medium" />
+
+    <ImageView
+        android:id="@+id/monitoringAnimationView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/infoTextView"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:src="@drawable/pulsing_circle_animation"/>
+
+    <Button
+        android:id="@+id/startMonitoringButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Monitoring"
+        android:layout_below="@id/monitoringAnimationView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:backgroundTint="@color/button_background"
+        android:textColor="@color/button_text"
+        android:fontFamily="@font/roboto_medium"
+        android:background="@drawable/rounded_button" />
+
+    <Button
+        android:id="@+id/stopMonitoringButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Monitoring"
+        android:layout_below="@id/startMonitoringButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:backgroundTint="@color/button_background"
+        android:textColor="@color/button_text"
+        android:fontFamily="@font/roboto_medium"
+        android:background="@drawable/rounded_button" />
+
+    <Button
+        android:id="@+id/openHotspotSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Hotspot Settings"
+        android:layout_below="@id/stopMonitoringButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:backgroundTint="@color/button_background"
+        android:textColor="@color/button_text"
+        android:fontFamily="@font/roboto_medium"
+        android:background="@drawable/rounded_button" />
+
+    <Button
+        android:id="@+id/force5GButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Force 5G Only"
+        android:layout_below="@id/openHotspotSettingsButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:backgroundTint="@color/button_background"
+        android:textColor="@color/button_text"
+        android:fontFamily="@font/roboto_medium"
+        android:background="@drawable/rounded_button" />
+
+</RelativeLayout>

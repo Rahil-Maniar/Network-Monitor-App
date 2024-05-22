@@ -1,0 +1,7 @@
+<resources>
+    <color name="background_dark">#2E2E2E</color>
+    <color name="text_primary_light">#FFFFFF</color>
+    <color name="text_secondary_light">#CCCCCC</color>
+    <color name="button_background">#5865F2</color>
+    <color name="button_text">#FFFFFF</color>
+</resources>
