@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -25,6 +26,9 @@ import java.lang.reflect.Method;
 public class NetworkMonitorService extends Service {
 
     private static final String CHANNEL_ID = "networkMonitorChannel";
+    private static final String PREFS_NAME = "NetworkMonitorPrefs";
+    private static final String LAST_NETWORK_TYPE = "lastNetworkType";
+    private static final String LAST_HOTSPOT_STATE = "lastHotspotState";
     private ConnectivityManager.NetworkCallback networkCallback;
 
     @Override
@@ -51,15 +55,21 @@ public class NetworkMonitorService extends Service {
     }
 
     private void updateNotificationBasedOnNetworkState() {
-        int networkType = getNetworkType();
-        @SuppressLint("InlinedApi") boolean is5G = networkType == TelephonyManager.NETWORK_TYPE_NR;
-        boolean is4G = networkType == TelephonyManager.NETWORK_TYPE_LTE;
+        int currentNetworkType = getNetworkType();
+        boolean is5G = currentNetworkType == TelephonyManager.NETWORK_TYPE_NR;
+        boolean is4G = currentNetworkType == TelephonyManager.NETWORK_TYPE_LTE;
         boolean isHotspotOn = isHotspotEnabled();
 
-        if (is5G && !isHotspotOn) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        int lastNetworkType = prefs.getInt(LAST_NETWORK_TYPE, -1);
+        boolean lastHotspotState = prefs.getBoolean(LAST_HOTSPOT_STATE, false);
+
+        if (is5G && !isHotspotOn && (lastNetworkType != currentNetworkType || lastHotspotState != isHotspotOn)) {
             notifyUser("Please turn on the hotspot.");
-        } else if (is4G && isHotspotOn) {
+            saveLastKnownState(currentNetworkType, isHotspotOn);
+        } else if (is4G && isHotspotOn && (lastNetworkType != currentNetworkType || lastHotspotState != isHotspotOn)) {
             notifyUser("Please turn off the hotspot.");
+            saveLastKnownState(currentNetworkType, isHotspotOn);
         } else {
             clearNotification();
         }
@@ -117,6 +127,14 @@ public class NetworkMonitorService extends Service {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    private void saveLastKnownState(int networkType, boolean hotspotState) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(LAST_NETWORK_TYPE, networkType);
+        editor.putBoolean(LAST_HOTSPOT_STATE, hotspotState);
+        editor.apply();
     }
 
     @Override

@@ -1,4 +1,4 @@
-<!-- res/layout/activity_main.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,21 +32,25 @@
         android:textStyle="bold"
         android:fontFamily="@font/roboto_medium" />
 
-    <ImageView
-        android:id="@+id/monitoringAnimationView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+    <TextView
+        android:id="@+id/monitoringStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monitoring Stopped"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary_light"
         android:layout_below="@id/infoTextView"
+        android:layout_marginBottom="24dp"
+        android:padding="8dp"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:src="@drawable/pulsing_circle_animation"/>
+        android:fontFamily="@font/roboto_regular" />
 
     <Button
         android:id="@+id/startMonitoringButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Monitoring"
-        android:layout_below="@id/monitoringAnimationView"
+        android:layout_below="@id/monitoringStatusTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:padding="12dp"
