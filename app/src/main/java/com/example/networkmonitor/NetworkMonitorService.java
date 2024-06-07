@@ -1,6 +1,5 @@
 package com.example.networkmonitor;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -36,6 +35,19 @@ public class NetworkMonitorService extends Service {
         super.onCreate();
         createNotificationChannel();
         monitorNetwork();
+        initializeLastKnownState();
+    }
+
+    private void initializeLastKnownState() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        int lastNetworkType = prefs.getInt(LAST_NETWORK_TYPE, TelephonyManager.NETWORK_TYPE_UNKNOWN);
+        boolean lastHotspotState = prefs.getBoolean(LAST_HOTSPOT_STATE, false);
+
+        if (lastNetworkType == TelephonyManager.NETWORK_TYPE_NR && !lastHotspotState) {
+            notifyUser("Please turn on the hotspot.");
+        } else if (is4G(lastNetworkType) && lastHotspotState) {
+            notifyUser("Please turn off the hotspot.");
+        }
     }
 
     private void monitorNetwork() {
@@ -57,7 +69,7 @@ public class NetworkMonitorService extends Service {
     private void updateNotificationBasedOnNetworkState() {
         int currentNetworkType = getNetworkType();
         boolean is5G = currentNetworkType == TelephonyManager.NETWORK_TYPE_NR;
-        boolean is4G = currentNetworkType == TelephonyManager.NETWORK_TYPE_LTE;
+        boolean is4G = is4G(currentNetworkType);
         boolean isHotspotOn = isHotspotEnabled();
 
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -93,6 +105,14 @@ public class NetworkMonitorService extends Service {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private boolean is4G(int networkType) {
+        return networkType == TelephonyManager.NETWORK_TYPE_LTE
+                || networkType == TelephonyManager.NETWORK_TYPE_EVDO_0
+                || networkType == TelephonyManager.NETWORK_TYPE_EVDO_A
+                || networkType == TelephonyManager.NETWORK_TYPE_EVDO_B
+                || networkType == TelephonyManager.NETWORK_TYPE_EHRPD;
     }
 
     private void notifyUser(String message) {
