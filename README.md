@@ -13,7 +13,7 @@ Network Monitor is an Android application that helps you manage your network con
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/network-monitor.git
+    git clone https://github.com/Rahil-Maniar/network-monitor.git
     ```
 2. Open the project in Android Studio.
 3. Build and run the application on your Android device.
